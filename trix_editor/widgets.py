@@ -2,7 +2,7 @@ from django import forms
 from django.utils.html import html_safe
 from django.conf import settings
 
-TRIX_VERSION = settings.get('TRIX_VERSION', '2.0.6')
+TRIX_VERSION = getattr(settings, 'TRIX_VERSION', '2.0.6')
 
 
 @html_safe
