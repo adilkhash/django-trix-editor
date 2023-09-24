@@ -24,12 +24,12 @@ class CSSPath:
 class Trix2Widget(forms.Textarea):
     def render(self, name, value, attrs=None, renderer=None):
         attrs = attrs or {}
-        attrs["hidden"] = True
+        attrs['hidden'] = True
         html = super().render(name, value, attrs=attrs, renderer=renderer)
         return f'{html}<trix-editor input="{attrs["id"]}"></trix-editor>'
 
     class Media:
         js = [JSPath()]
         css = {
-            "all": [CSSPath()],
+            'all': [CSSPath()],
         }

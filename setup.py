@@ -5,10 +5,10 @@ install_requires = [
 ]
 
 setup(
-    name='django-trix2',
+    name='django-trix-editor',
     version='0.1',
     packages=find_packages(),
-    url='https://github.com/adilkhash/django-trix2',
+    url='https://github.com/adilkhash/django-trix-editor',
     license='MIT',
     author='Adylzhan Khashtamov',
     author_email='adil.khashtamov@gmail.com',

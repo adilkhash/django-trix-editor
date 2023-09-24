@@ -1,5 +1,5 @@
 from django.db import models
-from trix2.widgets import Trix2Widget
+from trix_editor.widgets import Trix2Widget
 
 
 class Trix2Field(models.TextField):
