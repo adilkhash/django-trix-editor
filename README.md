@@ -27,7 +27,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-Don't forget to add the `trix_editor` urls to your `urls.py`:
+Don't forget to add the `trix_editor` urls to your `urls.py` to handle attachments:
 ```python
 
 from django.urls import include, path
@@ -49,7 +49,10 @@ class MyModel(models.Model):
     content = TrixEditorField()
 ```
 
-Or customize your forms using the widget `TrixEditorWidget`:
+
+## Templates and forms
+
+Customize your forms to use the widget `TrixEditorWidget`:
 
 ```python
 from django import forms
@@ -57,4 +60,42 @@ from trix_editor.widgets import TrixEditorWidget
 
 class MyForm(forms.Form):
     content = forms.CharField(widget=TrixEditorWidget())
+```
+
+But don't forget to include the following statements to your template to load the Trix editor assets:
+
+```html
+...
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    ...
+    {{ form.media.css }}
+</head>
+...
+<!-- footer -->
+{{ form.media.js }}
+```
+
+## Django Admin Integration
+To use the Trix editor in the Django admin, you need to add the following to your `admin.py`:
+
+```python
+from django.contrib import admin
+from django import forms
+
+from trix_editor.widgets import TrixEditorWidget
+
+class ContentForm(forms.ModelForm):
+    class Meta:
+        model = Content
+        fields = ["title", "content", "status"]
+        widgets = {
+            "content": TrixEditorWidget(),
+        }
+
+@admin.register(Content)
+class ContentAdmin(admin.ModelAdmin):
+    list_display = ("title", "status", "created", "updated")
+    form = ContentForm
 ```
