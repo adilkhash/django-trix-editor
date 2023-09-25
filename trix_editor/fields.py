@@ -1,8 +1,8 @@
 from django.db import models
-from trix_editor.widgets import Trix2Widget
+from trix_editor.widgets import TrixEditorWidget
 
 
-class Trix2Field(models.TextField):
+class TrixEditorField(models.TextField):
     def formfield(self, **kwargs):
-        kwargs['widget'] = Trix2Widget
+        kwargs['widget'] = TrixEditorWidget
         return super().formfield(**kwargs)

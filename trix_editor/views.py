@@ -5,6 +5,6 @@ from django.core.files.storage import default_storage
 
 @require_POST
 def handle_upload(request):
-    file = request.FILES.get("file")
+    file = request.FILES.get('file')
     filename = default_storage.save(file.name, file)
-    return JsonResponse({"attachment_url": default_storage.url(filename)})
+    return JsonResponse({'attachment_url': default_storage.url(filename)})

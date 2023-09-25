@@ -17,12 +17,44 @@ TRIX_VERSION = '2.0.0'
 ```
 
 ## Usage
-If you want to handle attachments, you need to add the following code to your `urls.py`:
+To use this package, you need to add it to your `INSTALLED_APPS`:
 
 ```python
+INSTALLED_APPS = [
+    ...
+    'trix_editor',
+    ...
+]
+```
+
+Don't forget to add the `trix_editor` urls to your `urls.py`:
+```python
+
+from django.urls import include, path
+
 urlpatterns = [
     ...
     path('trix-editor/', include('trix_editor.urls')),
     ...
 ]
+```
+
+You can use the `TrixEditorField` in your models:
+
+```python
+from django.db import models
+from trix_editor.fields import TrixEditorField
+
+class MyModel(models.Model):
+    content = TrixEditorField()
+```
+
+Or customize your forms using the widget `TrixEditorWidget`:
+
+```python
+from django import forms
+from trix_editor.widgets import TrixEditorWidget
+
+class MyForm(forms.Form):
+    content = forms.CharField(widget=TrixEditorWidget())
 ```
