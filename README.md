@@ -39,6 +39,12 @@ urlpatterns = [
 ]
 ```
 
+If you want to give a specific permission to upload attachments, you can specify it in your `settings.py`:
+
+```python
+TRIX_UPLOAD_PERMISSION = 'your_model.upload_attachment'
+```
+
 You can use the `TrixEditorField` in your models:
 
 ```python
