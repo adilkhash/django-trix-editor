@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 install_requires = [
-    'Django>=4.1',
+    'Django>=4.2',
 ]
 
 setup(
@@ -14,4 +14,5 @@ setup(
     author_email='adil.khashtamov@gmail.com',
     description='Django App To Integrate Trix Editor',
     install_requires=install_requires,
+    include_package_data=True,
 )
