@@ -1,24 +1,23 @@
 from django import forms
-from django.utils.html import html_safe
 from django.conf import settings
+from django.utils.safestring import mark_safe
 
-TRIX_VERSION = getattr(settings, 'TRIX_VERSION', '2.0.6')
+TRIX_VERSION = getattr(settings, 'TRIX_VERSION', '2.1.0')
+TRIX_FIELD_NAME = getattr(settings, 'TRIX_FIELD_NAME', 'description')
 
 
-@html_safe
 class JSPath:
-    def __str__(self):
+    def __html__(self):
         return (
-            f'<script src="https://unpkg.com/trix@{TRIX_VERSION}/dist/trix.umd.min.js" rel="stylesheet">'
+            f'<script type="text/javascript" src="//unpkg.com/trix@{TRIX_VERSION}/dist/trix.umd.min.js"></script>'
         )
 
 
-@html_safe
 class JSCode:
-    def __str__(self):
+    def __html__(self):
         return (
             """
-            <script>
+            <script type="text/javascript">
                 function getCookie(name) {
                     let cookieValue = null;
                     if (document.cookie && document.cookie !== '') {
@@ -78,11 +77,23 @@ class JSCode:
         )
 
 
-@html_safe
 class CSSPath:
-    def __str__(self):
+    def __html__(self):
         return (
             f'<link rel="stylesheet" href="https://unpkg.com/trix@{TRIX_VERSION}/dist/trix.css">'
+        )
+
+
+class CSSAdminCode:
+    def __html__(self):
+        return (
+            f"""
+            <style>
+                div.field-{TRIX_FIELD_NAME} div.flex-container {{
+                    display: block;
+                }}
+            </style>
+            """
         )
 
 
@@ -91,10 +102,13 @@ class TrixEditorWidget(forms.Textarea):
         attrs = attrs or {}
         attrs['hidden'] = True
         html = super().render(name, value, attrs=attrs, renderer=renderer)
-        return f'{html}<trix-editor input="{attrs["id"]}"></trix-editor>'
+        return mark_safe(f'{html}<trix-editor input="{attrs["id"]}"></trix-editor>')
 
     class Media:
-        js = [JSPath(), JSCode()]
+        js = [
+            JSCode(),
+            JSPath(),
+        ]
         css = {
-            'all': [CSSPath()],
+            'all': [CSSAdminCode(), CSSPath()],
         }
