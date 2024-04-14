@@ -86,7 +86,6 @@ But don't forget to include the following statements to your template to load th
 
 ## Django Admin Integration
 To use the Trix editor in the Django admin, you need to add the following to your `admin.py`:
-
 ```python
 from django.contrib import admin
 from django import forms

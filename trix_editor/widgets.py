@@ -3,7 +3,6 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 
 TRIX_VERSION = getattr(settings, 'TRIX_VERSION', '2.1.0')
-TRIX_FIELD_NAME = getattr(settings, 'TRIX_FIELD_NAME', 'description')
 
 
 class JSPath:
@@ -87,11 +86,11 @@ class CSSPath:
 class CSSAdminCode:
     def __html__(self):
         return (
-            f"""
+            """
             <style>
-                div.field-{TRIX_FIELD_NAME} div.flex-container {{
+                .flex-container:has(trix-editor) {
                     display: block;
-                }}
+                }
             </style>
             """
         )
