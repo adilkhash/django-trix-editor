@@ -1,5 +1,6 @@
 from django import forms
 from django.conf import settings
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 TRIX_VERSION = getattr(settings, 'TRIX_VERSION', '2.1.0')
@@ -56,7 +57,7 @@ class JSCode:
                     var xhr = new XMLHttpRequest()
                     formData.append("Content-Type", file.type)
                     formData.append("file", file)
-                    xhr.open("POST", "/trix-editor/upload/", true)
+                    xhr.open("POST", \"""" + reverse('trix_editor_upload') + """", true)
                     xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
                     xhr.upload.addEventListener("progress", function (event) {
                         progressCallback(event.loaded / event.total * 100)
