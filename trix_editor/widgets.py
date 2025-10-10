@@ -3,7 +3,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-TRIX_VERSION = getattr(settings, 'TRIX_VERSION', '2.1.0')
+TRIX_VERSION = getattr(settings, 'TRIX_VERSION', '2.1.15')
 
 
 class JSPath:
