@@ -3,7 +3,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-TRIX_VERSION = getattr(settings, 'TRIX_VERSION', '2.1.15')
+TRIX_VERSION = getattr(settings, 'TRIX_VERSION', '2.1.0')
 
 
 class JSPath:
@@ -84,12 +84,25 @@ class CSSPath:
         )
 
 
+class CSSAdminCode:
+    def __html__(self):
+        return (
+            """
+            <style>
+                .flex-container:has(trix-editor) {
+                    display: block;
+                }
+            </style>
+            """
+        )
+
+
 class TrixEditorWidget(forms.Textarea):
     def render(self, name, value, attrs=None, renderer=None):
         attrs = attrs or {}
         attrs['hidden'] = True
         html = super().render(name, value, attrs=attrs, renderer=renderer)
-        return mark_safe(f'{html}<div><trix-editor input="{attrs["id"]}"></trix-editor></div>')
+        return mark_safe(f'{html}<trix-editor input="{attrs["id"]}"></trix-editor>')
 
     class Media:
         js = [
@@ -97,5 +110,5 @@ class TrixEditorWidget(forms.Textarea):
             JSPath(),
         ]
         css = {
-            'all': [CSSPath()],
+            'all': [CSSAdminCode(), CSSPath()],
         }
