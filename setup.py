@@ -6,7 +6,7 @@ install_requires = [
 
 setup(
     name='django-trix-editor',
-    version='0.3',
+    version='0.4',
     packages=find_packages(),
     url='https://github.com/adilkhash/django-trix-editor',
     license='MIT',
