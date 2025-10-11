@@ -128,6 +128,9 @@ class CSSAdminCode:
                     trix-toolbar .trix-input--dialog {
                         color: white;
                     }
+                    trix-toolbar .trix-button--dialog {
+                        color: white;
+                    }
                 }
             </style>
             """
