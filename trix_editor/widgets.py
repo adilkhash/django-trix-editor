@@ -88,9 +88,46 @@ class CSSAdminCode:
     def __html__(self):
         return (
             """
-            <style>
-                .flex-container:has(trix-editor) {
-                    display: block;
+            <style>                 
+                trix-editor, 
+                trix-toolbar .trix-button-group,
+                trix-toolbar .trix-button {
+                    border-color: var(--border-color) !important;
+                }
+
+                /* Url dialog */
+                trix-toolbar .trix-dialog,
+                trix-toolbar .trix-input--dialog {
+                    background: var(--body-bg) !important;
+                }
+                trix-toolbar .trix-input--dialog:focus {
+                    border-color: var(--body-quiet-color);
+                }
+
+                html[data-theme="dark"] {
+                    trix-toolbar .trix-button:before {
+                        filter: invert();
+                    }
+                    trix-editor {
+                        color: white;
+                    }
+                    trix-toolbar .trix-button:before:disabled {
+                        filter: invert() grayscale(1) brightness(2);
+                    }
+                    trix-toolbar .trix-button--icon::before {
+                        opacity: 1;
+                    }
+                    trix-toolbar .trix-button--icon:disabled::before {
+                        opacity: 0.5;
+                    }
+                    trix-toolbar .trix-button.trix-active {
+                        background: var(--button-bg) !important;
+                    }
+
+                    /* Url dialog */
+                    trix-toolbar .trix-input--dialog {
+                        color: white;
+                    }
                 }
             </style>
             """
@@ -102,7 +139,7 @@ class TrixEditorWidget(forms.Textarea):
         attrs = attrs or {}
         attrs['hidden'] = True
         html = super().render(name, value, attrs=attrs, renderer=renderer)
-        return mark_safe(f'{html}<trix-editor input="{attrs["id"]}"></trix-editor>')
+        return mark_safe(f'{html}<div><trix-editor input="{attrs["id"]}"></trix-editor></div>')
 
     class Media:
         js = [
@@ -110,5 +147,8 @@ class TrixEditorWidget(forms.Textarea):
             JSPath(),
         ]
         css = {
-            'all': [CSSAdminCode(), CSSPath()],
+            'all': [
+                CSSAdminCode(),
+                CSSPath(),
+            ],
         }
